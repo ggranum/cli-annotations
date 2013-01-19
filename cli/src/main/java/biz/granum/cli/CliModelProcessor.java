@@ -27,6 +27,21 @@
  * @author ggranum
  */
 package biz.granum.cli;
+/**
+ * Unmarshal command line arguments into an instance of the provided bean class.
+ *
+ * Create a new instance of this class by calling the static #create methods. Populate a new
+ * instance of your annotated configuration bean by calling #processArguments(String[]) on the returned
+ * CliModelProcessor instance.
+ *
+ * If you want to override the instance types that are used to populate various Collections subtypes you can
+ * do so via the #registerCollectionMapping method.
+ * An example use case might be that your configuration bean has one or more fields of type Set,
+ * and you wish to use a LinkedHashSet instead of a HashSet so as to preserve order.
+ *
+ * The defaults are: Set -> HashSet, List -> ArrayList, Iterable -> ArrayList, SortedSet -> TreeSet.
+ *
+ */
 
 import biz.granum.cli.annotation.*;
 import biz.granum.cli.exception.*;
@@ -37,8 +52,7 @@ import org.apache.commons.lang.*;
 
 public class CliModelProcessor<T> {
 
-    private static final Map<Class, Class<? extends Collection>> collectionAbstractionMappings
-            = new HashMap<Class, Class<? extends Collection>>();
+    private static final Map<Class, Class<? extends Collection>> collectionAbstractionMappings = new HashMap<Class, Class<? extends Collection>>();
 
     static {
         collectionAbstractionMappings.put(Set.class, HashSet.class);
@@ -67,23 +81,23 @@ public class CliModelProcessor<T> {
         collectionAbstractionMappings.put(abstraction, implementation);
     }
 
-    public Class<T> getModelClass() {
+    Class<T> getModelClass() {
         return modelClass;
     }
 
-    public CliProviderPlugin getProvider() {
+    CliProviderPlugin getProvider() {
         return provider;
     }
 
-    public Iterable<Field> getFields() {
+    Iterable<Field> getFields() {
         return fieldToOptionsMap.keySet();
     }
 
-    public CliOptionType getCliOptionFor(Field field) {
+    CliOptionType getCliOptionFor(Field field) {
         return fieldToOptionsMap.get(field);
     }
 
-    public CliArgumentType getCliOptionArgumentFor(Field field) {
+    CliArgumentType getCliOptionArgumentFor(Field field) {
         return fieldToOptionArgumentTypeMap.get(field);
     }
 

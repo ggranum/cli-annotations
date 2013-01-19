@@ -20,6 +20,10 @@
  * DEALINGS IN THE SOFTWARE.
  */
 package biz.granum.cli;
+/**
+ * A simple convenience class that provides a 'show help' option.
+ *
+ */
 
 import biz.granum.cli.annotation.*;
 
