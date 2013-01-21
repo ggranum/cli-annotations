@@ -23,13 +23,13 @@
 package biz.granum.cli.propreader.byproperties;
 
 import biz.granum.cli.CliModelProcessor;
-import biz.granum.cli.CliVariousUserInputErrorsTest;
 import biz.granum.cli.TestData;
 import biz.granum.cli.byproperties.PropertyFileTestDataImpl;
+import biz.granum.cli.plugintest.UserInputErrorsTest;
 import biz.granum.cli.propreader.PropertyReaderModelProcessor;
 import java.util.Properties;
 
-public class PropertyFileUserInputErrorsTest extends CliVariousUserInputErrorsTest<Properties> {
+public class PropertyFileUserInputErrorsTest extends UserInputErrorsTest<Properties> {
 
     @Override
     public TestData<Properties> getTestData() {

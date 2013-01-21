@@ -23,11 +23,11 @@
 package biz.granum.cli.joptsimple;
 
 import biz.granum.cli.CliModelProcessor;
-import biz.granum.cli.CliVariousUserInputErrorsTest;
 import biz.granum.cli.TestData;
 import biz.granum.cli.bycommandline.CommandLineTestDataImpl;
+import biz.granum.cli.plugintest.UserInputErrorsTest;
 
-public class JoptSimpleVariousUserInputErrorsTest extends CliVariousUserInputErrorsTest<String[]> {
+public class JoptSimpleUserInputErrorsTest extends UserInputErrorsTest<String[]> {
 
     @Override
     public TestData<String[]> getTestData() {

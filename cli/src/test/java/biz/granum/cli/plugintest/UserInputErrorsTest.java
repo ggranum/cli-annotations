@@ -4,8 +4,10 @@
  * 11/3/12 6:25 PM 
  * @author ggranum
  */
-package biz.granum.cli;
+package biz.granum.cli.plugintest;
 
+import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.TestData;
 import biz.granum.cli.configuration.BooleanConfigurations;
 import biz.granum.cli.exception.CliUserInputException;
 import org.junit.Before;
@@ -14,7 +16,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public abstract class CliVariousUserInputErrorsTest<I> {
+public abstract class UserInputErrorsTest<I> {
 
     private TestData<I> testData;
 
