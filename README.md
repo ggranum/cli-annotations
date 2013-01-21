@@ -140,7 +140,13 @@ There's no limit to the number of paths you can throw at it, and, as mentioned, 
 The command line is just as easy, and thanks to JOptSimple it will even generate most of your help listing for you.
 So long as you use reasonable option names (in the annotations) you won't need to augment the help output by much,
 even for user facing applications. Let's set up a main method for the same configuration POJO as we showed above,
-with one difference: make ProcessorTestConfig extend CliConfig
+with one difference - make ProcessorTestConfig extend CliConfig:
+
+    public class ProcessorTestConfig extendsd CliConfig {
+        // ...  body as before
+    }
+
+And now parse:
 
     public static void main(String[] args) throws Exception{
         JoptSimpleCliModelProcessor<ProcessorTestConfig> processor =
@@ -155,6 +161,27 @@ with one difference: make ProcessorTestConfig extend CliConfig
     }
 
 It really doesn't get much easier than that.
+
+
+### Getting Jars
+
+Branch the repo and then execute the gradle build:
+
+    > gradle build
+
+This will generate three jars; one for cli-annotations and one each for the CLI and PropertyReader plugins.
+
+Both plugins dependon commons-lang:
+
+    ~build.gradle
+        ...
+        compile 'commons-lang:commons-lang:2.6'
+
+The CLI plugin needs JOptSimple:
+
+    ~build.gradle
+        ...
+        compile 'net.sf.jopt-simple:jopt-simple:4.3'
 
 
 ### Have fun, and I'd love your feedback and/or pull requests.
