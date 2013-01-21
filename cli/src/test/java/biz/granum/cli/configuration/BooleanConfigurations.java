@@ -22,9 +22,10 @@
 
 package biz.granum.cli.configuration;
 
-import biz.granum.cli.*;
-import biz.granum.cli.annotation.*;
-import java.util.*;
+import biz.granum.cli.CliConfig;
+import biz.granum.cli.annotation.CliOption;
+import biz.granum.cli.annotation.CliOptionArgument;
+import java.util.List;
 
 public class BooleanConfigurations extends CliConfig {
 
@@ -57,6 +58,27 @@ public class BooleanConfigurations extends CliConfig {
             argument = @CliOptionArgument(defaultValue = "true")
     )
     public Boolean eBoolean;
+
+    @CliOption(
+            shortOption = "f",
+            longOption = "fBooleanLongOption",
+            description = "Boolean value with long option, default false."
+    )
+    public Boolean fBoolean;
+
+    @CliOption(
+            shortOption = "g",
+            description = "Boolean value with no long option."
+    )
+    public Boolean gBoolean;
+
+    @CliOption(
+            shortOption = "i",
+            longOption = "iBoolean",
+            propertyKey = "custom.key.for.i.boolean",
+            description = "Boolean value with custom key"
+    )
+    public Boolean iBoolean;
 
     public BooleanConfigurations() {
     }

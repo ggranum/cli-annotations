@@ -28,29 +28,39 @@
  */
 package biz.granum.cli;
 
-import biz.granum.cli.exception.*;
-import java.io.*;
-import java.util.*;
+import biz.granum.cli.exception.CliCouldNotCreateDefaultValueException;
+import java.io.PrintWriter;
+import java.util.List;
 
-public interface CliProviderPlugin {
+/**
+ * Parses the Input and responds to queries for the status of specific arguments during the scanning
+ * of the output configuration model bean.
+ *
+ * @param <I>
+ *         Input Type.
+ */
+public interface CliProviderPlugin<I> {
     void addOption(CliOptionType optionType);
 
-    void addArgument(CliOptionType optionKey, CliArgumentType cliArgument) throws CliCouldNotCreateDefaultValueException;
+    void addArgument(CliOptionType optionLookupKey, CliArgumentType cliArgument)
+            throws CliCouldNotCreateDefaultValueException;
 
-    void processArguments(String[] args);
+    void processInput(I args);
 
     void printHelp(PrintWriter writer);
 
     /**
      * Handle a no-arg option value, often referred to as 'flags'.
+     * For Property providers, handle a Boolean property value.
      *
-     * @param optionKey The short or long option, such as 'h' or 'help'.
+     * @param optionLookupKey
+     *         The short or long option, such as 'h' or 'help'.
      * @return True if the no-argument option was present in the arguments list, false otherwise.
      */
-    boolean isOptionSet(String optionKey);
+    boolean isOptionSet(String optionLookupKey);
 
-    Object getOptionValue(String optionKey, CliArgumentType argumentType);
+    Object getOptionValue(String optionLookupKey, CliArgumentType argumentType);
 
-    List getRepeatingOptionValue(String optionKey, CliArgumentType argumentType);
+    List getRepeatingOptionValue(String optionLookupKey, CliArgumentType argumentType);
 
 }

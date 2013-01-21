@@ -28,15 +28,29 @@
  */
 package biz.granum.cli.joptsimple;
 
-import biz.granum.cli.*;
-import biz.granum.cli.exception.*;
-import java.io.*;
-import java.util.*;
-import joptsimple.*;
+import biz.granum.cli.CliArgumentType;
+import biz.granum.cli.CliOptionType;
+import biz.granum.cli.CliProviderPlugin;
+import biz.granum.cli.exception.CliCouldNotCreateDefaultValueException;
+import biz.granum.cli.exception.CliCouldNotProcessArgumentsException;
+import biz.granum.cli.exception.CliMissingRequiredOptionException;
+import biz.granum.cli.exception.CliUserInputException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
+import joptsimple.ArgumentAcceptingOptionSpec;
+import joptsimple.OptionException;
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import joptsimple.OptionSpecBuilder;
+import joptsimple.ValueConverter;
 
-public class JoptSimpleCliProvider implements CliProviderPlugin {
+public class JoptSimpleCliProvider implements CliProviderPlugin<String[]> {
     private final OptionParser optionParser;
+
     private OptionSpecBuilder builder;
+
     private OptionSet optionSet;
 
     public JoptSimpleCliProvider() {
@@ -44,9 +58,15 @@ public class JoptSimpleCliProvider implements CliProviderPlugin {
     }
 
     public void addOption(CliOptionType optionType) {
-        builder = optionParser.acceptsAll(Arrays.asList(
-                optionType.getShortOption(), optionType.getLongOption()), optionType.getDescription()
-        );
+        if(optionType.getShortOption().equals("")) {
+            builder = optionParser.accepts(optionType.getLongOption(), optionType.getDescription());
+        } else if(optionType.getLongOption().equals("")) {
+            builder = optionParser.accepts(optionType.getShortOption(), optionType.getDescription());
+        } else {
+            builder = optionParser.acceptsAll(Arrays.asList(
+                    optionType.getShortOption(), optionType.getLongOption()), optionType.getDescription()
+            );
+        }
     }
 
     public void addArgument(CliOptionType optionKey, CliArgumentType cliArgument)
@@ -66,13 +86,12 @@ public class JoptSimpleCliProvider implements CliProviderPlugin {
                 optSpec.required();
             }
 
-
             if(cliArgument.isRepeating()) {
                 optSpec.withValuesSeparatedBy(cliArgument.getSeparator());
             }
 
             if(cliArgument.getTypeConverter() != null
-                    && ValueConverter.class.isAssignableFrom(cliArgument.getTypeConverter())) {
+               && ValueConverter.class.isAssignableFrom(cliArgument.getTypeConverter())) {
                 withValuesConvertedByNoGenericsWarnings(cliArgument, optSpec);
 
             }
@@ -83,20 +102,19 @@ public class JoptSimpleCliProvider implements CliProviderPlugin {
 
     @SuppressWarnings("unchecked")
     private void withValuesConvertedByNoGenericsWarnings(CliArgumentType cliArgument,
-                                                         ArgumentAcceptingOptionSpec optSpec)
+            ArgumentAcceptingOptionSpec optSpec)
             throws InstantiationException, IllegalAccessException {
-        optSpec.withValuesConvertedBy((ValueConverter) cliArgument.getTypeConverter().newInstance());
+        optSpec.withValuesConvertedBy((ValueConverter)cliArgument.getTypeConverter().newInstance());
     }
-
 
     @SuppressWarnings("unchecked")
     private ArgumentAcceptingOptionSpec defaultsToNoGenericsWarnings(CliArgumentType cliArgument,
-                                                                     ArgumentAcceptingOptionSpec optSpec) {
+            ArgumentAcceptingOptionSpec optSpec) {
         optSpec = optSpec.defaultsTo(cliArgument.getTypedDefaultValues());
         return optSpec;
     }
 
-    public void processArguments(String[] arguments) {
+    public void processInput(String[] arguments) {
         try {
             this.optionSet = optionParser.parse(arguments);
         } catch (OptionException e) {
@@ -107,7 +125,6 @@ public class JoptSimpleCliProvider implements CliProviderPlugin {
             throw new CliUserInputException(e);
         }
     }
-
 
     public boolean isOptionSet(String optionKey) {
         return optionSet.has(optionKey);

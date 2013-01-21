@@ -22,30 +22,29 @@
 
 package biz.granum.cli.joptsimple;
 
-import biz.granum.cli.*;
-import biz.granum.cli.configuration.*;
-import java.io.*;
-import org.junit.*;
+import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.configuration.ShowHelpTestCase;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class CliShowHelpTest {
 
-    private String getHelpOutput(String header, String footer) {
+    private String getHelpOutput(String header, String footer) throws Exception {
         String[] args = {
                 "-h"
         };
         StringWriter stringWriter = new StringWriter();
         PrintWriter out = new PrintWriter(stringWriter);
 
-
-        CliProviderPlugin plugin = new JoptSimpleCliProvider();
-        CliModelProcessor<ShowHelpTestCase> processor = CliModelProcessor.create(
-                ShowHelpTestCase.class,
-                plugin,
-                header, footer
-        );
+        CliModelProcessor<String[], ShowHelpTestCase> processor =
+                new JoptSimpleCliModelProcessor<ShowHelpTestCase>(
+                        ShowHelpTestCase.class,
+                        header, footer
+                );
         ShowHelpTestCase config = processor.processArguments(args);
 
         if(config.showHelp()) {
@@ -75,7 +74,7 @@ public class CliShowHelpTest {
     public void testShowHelpForListOfStringsWithOptionAndArgumentDescription() throws Exception {
         String actual = getHelpOutput("", "");
         String expected = "\n-t, --stringValues [foo,bar,baz]        A comma separated list of values,      \r\n" +
-                "                                          w/extra description.";
+                          "                                          w/extra description.";
         assertThat(actual, containsString(expected));
     }
 }

@@ -22,15 +22,24 @@
 
 package biz.granum.cli.joptsimple;
 
-import biz.granum.cli.*;
+import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.CliVariousUserInputErrorsTest;
+import biz.granum.cli.TestData;
+import biz.granum.cli.bycommandline.CommandLineTestDataImpl;
 
-public class JoptSimpleVariousUserInputErrorsTest extends CliVariousUserInputErrorsTest {
+public class JoptSimpleVariousUserInputErrorsTest extends CliVariousUserInputErrorsTest<String[]> {
 
     @Override
-    public CliProviderPlugin getPlugin() {
-        return new JoptSimpleCliProvider();
+    public TestData<String[]> getTestData() {
+        return new CommandLineTestDataImpl();
     }
 
+    public <T> CliModelProcessor<String[], T> getProcessor(Class<T> model, String header, String footer) {
+        return new JoptSimpleCliModelProcessor<T>(
+                model,
+                header, footer
+        );
+    }
 
 }
  

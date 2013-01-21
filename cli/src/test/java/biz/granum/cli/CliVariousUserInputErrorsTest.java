@@ -6,39 +6,40 @@
  */
 package biz.granum.cli;
 
-import biz.granum.cli.configuration.*;
-import biz.granum.cli.exception.*;
-import org.junit.*;
+import biz.granum.cli.configuration.BooleanConfigurations;
+import biz.granum.cli.exception.CliUserInputException;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public abstract class CliVariousUserInputErrorsTest {
+public abstract class CliVariousUserInputErrorsTest<I> {
 
+    private TestData<I> testData;
 
-    public abstract CliProviderPlugin getPlugin();
+    public abstract TestData<I> getTestData();
 
-    public <T> T getPopulatedModel(String[] args, Class<T> model) {
-        CliProviderPlugin plugin = getPlugin();
-        CliModelProcessor<T> processor = CliModelProcessor.create(
-                model,
-                plugin,
-                "",
-                ""
-        );
+    public abstract <T> CliModelProcessor<I, T> getProcessor(Class<T> model,
+            String header,
+            String footer);
+
+    public <T> T getPopulatedModel(I args, Class<T> model) throws Exception {
+        CliModelProcessor<I, T> processor = getProcessor(model, "", "");
         return processor.processArguments(args);
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        this.testData = getTestData();
     }
 
     @Test(expected = CliUserInputException.class)
     public void testUnknownArgument() throws Exception {
-        String[] args = {
-                "--aiksjdfkjasdf",
-                "foo,bar,baz"
-        };
+        I args = testData.getTestUnknownArgument();
         BooleanConfigurations model = getPopulatedModel(args, BooleanConfigurations.class);
         assertThat(model, nullValue());
     }
-
 
 }
  

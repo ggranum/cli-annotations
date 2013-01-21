@@ -18,9 +18,6 @@
         </option>
         <option name="JD_ALIGN_PARAM_COMMENTS" value="false" />
         <option name="JD_DO_NOT_WRAP_ONE_LINE_COMMENTS" value="true" />
-        <JSCodeStyleSettings>
-          <option name="SPACE_AFTER_PROPERTY_COLON" value="true" />
-        </JSCodeStyleSettings>
         <XML>
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
         </XML>
@@ -58,7 +55,6 @@
         </codeStyleSettings>
       </value>
     </option>
-    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
   </component>
 </project>
 

@@ -6,25 +6,20 @@
  */
 package biz.granum.cli;
 
-import biz.granum.cli.configuration.*;
-import org.junit.*;
+import biz.granum.cli.configuration.BooleanConfigurations;
+import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public abstract class CliParseBooleanModelTest {
 
+    public abstract <T> CliModelProcessor<String[], T> getProcessor(Class<T> model,
+            String header,
+            String footer);
 
-    public abstract CliProviderPlugin getPlugin();
-
-    public <T> T getPopulatedModel(String[] args, Class<T> model) {
-        CliProviderPlugin plugin = getPlugin();
-        CliModelProcessor<T> processor = CliModelProcessor.create(
-                model,
-                plugin,
-                "",
-                ""
-        );
+    public <T> T getPopulatedModel(String[] args, Class<T> model) throws Exception {
+        CliModelProcessor<String[], T> processor = getProcessor(model, "", "");
         return processor.processArguments(args);
     }
 

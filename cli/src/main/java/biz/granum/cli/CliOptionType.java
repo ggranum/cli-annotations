@@ -28,15 +28,19 @@
  */
 package biz.granum.cli;
 
-import biz.granum.cli.annotation.*;
-import biz.granum.cli.exception.*;
+import biz.granum.cli.annotation.CliOptionArgument;
+import biz.granum.cli.exception.CliMissingOptionNameAnnotationException;
 
 public class CliOptionType {
 
-
     private final String shortOption;
+
     private final String longOption;
-    private final String optionKey;
+
+    private final String propertyKey;
+
+    private final String optionLookup;
+
     private final String description;
 
     private final boolean required;
@@ -46,12 +50,12 @@ public class CliOptionType {
     public CliOptionType(Builder builder) {
         this.shortOption = builder.shortOption;
         this.longOption = builder.longOption;
-        this.optionKey = builder.optionKey;
+        this.propertyKey = builder.propertyKey;
+        this.optionLookup = builder.optionLookup;
         this.required = builder.required;
         this.description = builder.description;
         this.argument = builder.argument;
     }
-
 
     public String getShortOption() {
         return shortOption;
@@ -61,8 +65,12 @@ public class CliOptionType {
         return longOption;
     }
 
-    public String getOptionKey() {
-        return optionKey;
+    public String getPropertyKey() {
+        return propertyKey;
+    }
+
+    public String getOptionLookupKey() {
+        return optionLookup;
     }
 
     public String getDescription() {
@@ -79,12 +87,23 @@ public class CliOptionType {
 
     public static class Builder {
         private String shortOption;
+
         private String longOption;
-        private String optionKey;
+
+        private String propertyKey;
+
+        private String optionLookup;
+
         private String description;
+
         private boolean required;
+
         public CliOptionArgument argument;
 
+        public Builder withPropertyKey(String propertyKey) {
+            this.propertyKey = propertyKey;
+            return this;
+        }
 
         public Builder setShortOption(String shortOption) {
             this.shortOption = shortOption;
@@ -111,7 +130,6 @@ public class CliOptionType {
             return this;
         }
 
-
         private void validateOptionName() {
             if(shortOption.equals("") && longOption.equals("")) {
                 throw new CliMissingOptionNameAnnotationException();
@@ -120,7 +138,7 @@ public class CliOptionType {
 
         public CliOptionType build() {
             validateOptionName();
-            optionKey = longOption.equals("") ? shortOption : longOption;
+            optionLookup = longOption.equals("") ? shortOption : longOption;
             return new CliOptionType(this);
         }
 

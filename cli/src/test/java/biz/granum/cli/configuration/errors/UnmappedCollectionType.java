@@ -22,15 +22,17 @@
 
 package biz.granum.cli.configuration.errors;
 
-import biz.granum.cli.*;
-import biz.granum.cli.annotation.*;
-import java.util.*;
+import biz.granum.cli.CliConfig;
+import biz.granum.cli.annotation.CliOption;
+import biz.granum.cli.annotation.CliOptionArgument;
+import java.util.AbstractList;
 
 public class UnmappedCollectionType extends CliConfig {
 
     @CliOption(
             shortOption = "a",
             longOption = "aBadCollectionType",
+            propertyKey = "simpleStringList",
             description = "An unparsable collection type.",
             argument = @CliOptionArgument(required = true)
     )

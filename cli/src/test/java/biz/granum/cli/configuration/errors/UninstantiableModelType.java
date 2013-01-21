@@ -22,14 +22,15 @@
 
 package biz.granum.cli.configuration.errors;
 
-import biz.granum.cli.*;
-import biz.granum.cli.annotation.*;
+import biz.granum.cli.CliConfig;
+import biz.granum.cli.annotation.CliOption;
 
 public class UninstantiableModelType extends CliConfig {
 
     @CliOption(
             shortOption = "s",
             longOption = "simpleFlag",
+            propertyKey = "simpleFlag",
             description = "Model with no no-arg constructor."
     )
     public boolean simpleFlag;

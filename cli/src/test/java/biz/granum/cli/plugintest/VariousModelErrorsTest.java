@@ -4,69 +4,74 @@
  * 11/3/12 6:25 PM 
  * @author ggranum
  */
-package biz.granum.cli;
+package biz.granum.cli.plugintest;
 
-import biz.granum.cli.configuration.errors.*;
-import biz.granum.cli.exception.*;
-import java.util.*;
-import org.junit.*;
+import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.TestData;
+import biz.granum.cli.configuration.errors.BadDefaultValuesConfiguration;
+import biz.granum.cli.configuration.errors.InstantiationExceptionCollectionType;
+import biz.granum.cli.configuration.errors.RequiredIntegerConfiguration;
+import biz.granum.cli.configuration.errors.UninstantiableCollectionType;
+import biz.granum.cli.configuration.errors.UninstantiableModelType;
+import biz.granum.cli.configuration.errors.UnmappedCollectionType;
+import biz.granum.cli.exception.CliCouldNotCreateCollectionException;
+import biz.granum.cli.exception.CliCouldNotCreateDefaultValueException;
+import biz.granum.cli.exception.CliCouldNotCreateModelException;
+import biz.granum.cli.exception.CliMissingRequiredOptionException;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public abstract class CliVariousModelErrorsTest {
+public abstract class VariousModelErrorsTest<I> {
 
+    private TestData<I> testData;
 
-    public abstract CliProviderPlugin getPlugin();
+    public abstract TestData<I> getTestData();
 
-    public <T> T getPopulatedModel(String[] args, Class<T> model) {
-        CliProviderPlugin plugin = getPlugin();
-        CliModelProcessor<T> processor = CliModelProcessor.create(
-                model,
-                plugin,
-                "",
-                ""
-        );
+    public abstract <T> CliModelProcessor<I, T> getProcessor(Class<T> model,
+            String header,
+            String footer);
+
+    public <T> T getPopulatedModel(I args, Class<T> model) throws Exception {
+        CliModelProcessor<I, T> processor = getProcessor(model, "", "");
         return processor.processArguments(args);
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        this.testData = getTestData();
     }
 
     @Test(expected = CliCouldNotCreateCollectionException.class)
     public void testUnmappedCollectionType() throws Exception {
-        String[] args = {
-                "-a",
-                "foo,bar,baz"
-        };
+        I args = testData.getSimpleStringList();
         UnmappedCollectionType model = getPopulatedModel(args, UnmappedCollectionType.class);
         assertThat(model, nullValue());
     }
 
     @Test
     public void testManuallyMappedCollectionType() throws Exception {
-        String[] args = {
-                "-a",
-                "foo,bar,baz"
-        };
+        I args = testData.getSimpleStringList();
         CliModelProcessor.registerCollectionMapping(AbstractList.class, ArrayList.class);
         UnmappedCollectionType model = getPopulatedModel(args, UnmappedCollectionType.class);
         assertThat(model, notNullValue());
+        assertThat(model.unmappedCollectionType.size(), is(3));
     }
 
     @Test(expected = CliCouldNotCreateCollectionException.class)
     public void testUninstantiableCollectionType() throws Exception {
-        String[] args = {
-                "-a",
-                "foo,bar,baz"
-        };
+        I args = testData.getSimpleStringList();
         UninstantiableCollectionType model = getPopulatedModel(args, UninstantiableCollectionType.class);
         assertThat(model, nullValue());
     }
 
     @Test(expected = CliCouldNotCreateCollectionException.class)
     public void testInstantiationExceptionCollectionType() throws Exception {
-        String[] args = {
-                "-a",
-                "foo,bar,baz"
-        };
+        I args = testData.getSimpleStringList();
         InstantiationExceptionCollectionType model =
                 getPopulatedModel(args, InstantiationExceptionCollectionType.class);
         assertThat(model, nullValue());
@@ -74,31 +79,23 @@ public abstract class CliVariousModelErrorsTest {
 
     @Test(expected = CliCouldNotCreateModelException.class)
     public void testUninstantiableModelType() throws Exception {
-        String[] args = {
-                "-s"
-        };
+        I args = testData.getSimpleFlag();
         UninstantiableModelType model = getPopulatedModel(args, UninstantiableModelType.class);
         assertThat(model, nullValue());
     }
 
     @Test(expected = CliMissingRequiredOptionException.class)
     public void testMissingRequiredValue() throws Exception {
-        String[] args = {
-
-        };
+        I args = testData.getEmptyInput();
         RequiredIntegerConfiguration model = getPopulatedModel(args, RequiredIntegerConfiguration.class);
         assertThat(model, nullValue());
     }
 
     @Test(expected = CliCouldNotCreateDefaultValueException.class)
     public void testBadDefaultValue() throws Exception {
-        String[] args = {
-
-        };
+        I args = testData.getEmptyInput();
         BadDefaultValuesConfiguration model = getPopulatedModel(args, BadDefaultValuesConfiguration.class);
         assertThat(model, nullValue());
     }
-
-
 }
  

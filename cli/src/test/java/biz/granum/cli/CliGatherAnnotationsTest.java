@@ -6,31 +6,33 @@
  */
 package biz.granum.cli;
 
-import biz.granum.cli.configuration.errors.*;
-import biz.granum.cli.exception.*;
-import java.io.*;
-import java.util.*;
-import org.junit.*;
+import biz.granum.cli.configuration.errors.MissingOptionsConfiguration;
+import biz.granum.cli.configuration.errors.UninstantiableCollectionMemberType;
+import biz.granum.cli.exception.CliCouldNotCreateDefaultValueException;
+import biz.granum.cli.exception.CliMissingOptionNameAnnotationException;
+import java.io.PrintWriter;
+import java.util.List;
+import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class CliGatherAnnotationsTest {
 
-
-    public CliProviderPlugin getPlugin() {
-        return new CliProviderPlugin() {
+    public CliProviderPlugin<String[]> getPlugin() {
+        return new CliProviderPlugin<String[]>() {
 
             @Override
             public void addOption(CliOptionType optionType) {
             }
 
             @Override
-            public void addArgument(CliOptionType optionKey, CliArgumentType cliArgument) throws CliCouldNotCreateDefaultValueException {
+            public void addArgument(CliOptionType optionKey, CliArgumentType cliArgument) throws
+                    CliCouldNotCreateDefaultValueException {
             }
 
             @Override
-            public void processArguments(String[] args) {
+            public void processInput(String[] args) {
             }
 
             @Override
@@ -54,14 +56,10 @@ public class CliGatherAnnotationsTest {
         };
     }
 
-    public <T> T getPopulatedModel(String[] args, Class<T> model) {
-        CliProviderPlugin plugin = getPlugin();
-        CliModelProcessor<T> processor = CliModelProcessor.create(
-                model,
-                plugin,
-                "",
-                ""
-        );
+    public <T> T getPopulatedModel(String[] args, Class<T> model) throws Exception {
+        CliProviderPlugin<String[]> plugin = getPlugin();
+        CliModelProcessor<String[], T> processor = new CliModelProcessor<String[], T>(model, plugin, "", "") {
+        };
         return processor.processArguments(args);
     }
 
@@ -78,7 +76,6 @@ public class CliGatherAnnotationsTest {
         UninstantiableCollectionMemberType model = getPopulatedModel(args, UninstantiableCollectionMemberType.class);
         assertThat(model, nullValue());
     }
-
 
 }
  

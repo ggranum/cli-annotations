@@ -22,15 +22,17 @@
 
 package biz.granum.cli.joptsimple;
 
-import biz.granum.cli.*;
+import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.CliParseIntegerModelTest;
 
 public class JoptSimpleParseIntegerModelTest extends CliParseIntegerModelTest {
 
-    @Override
-    public CliProviderPlugin getPlugin() {
-        return new JoptSimpleCliProvider();
+    public <T> CliModelProcessor<String[], T> getProcessor(Class<T> model, String header, String footer) {
+        return new JoptSimpleCliModelProcessor<T>(
+                model,
+                header, footer
+        );
     }
-
 
 }
  

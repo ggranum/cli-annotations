@@ -23,9 +23,16 @@
 package biz.granum.cli.joptsimple;
 
 import biz.granum.cli.CliModelProcessor;
-import biz.granum.cli.CliParseStringModelTest;
+import biz.granum.cli.TestData;
+import biz.granum.cli.bycommandline.CommandLineTestDataImpl;
+import biz.granum.cli.plugintest.VariousModelErrorsTest;
 
-public class JoptSimpleParseStringModelTest extends CliParseStringModelTest {
+public class JoptSimpleVariousModelErrorsTest extends VariousModelErrorsTest<String[]> {
+
+    @Override
+    public TestData<String[]> getTestData() {
+        return new CommandLineTestDataImpl();
+    }
 
     public <T> CliModelProcessor<String[], T> getProcessor(Class<T> model, String header, String footer) {
         return new JoptSimpleCliModelProcessor<T>(

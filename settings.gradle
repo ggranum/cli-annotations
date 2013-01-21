@@ -1,1 +1,3 @@
-include "cli", "plugins:joptsimple"
+include "cli",
+        "plugins:joptsimple",
+        "plugins:propreader"

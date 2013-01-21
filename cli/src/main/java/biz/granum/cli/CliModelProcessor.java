@@ -43,16 +43,30 @@ package biz.granum.cli;
  *
  */
 
-import biz.granum.cli.annotation.*;
-import biz.granum.cli.exception.*;
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
-import org.apache.commons.lang.*;
+import biz.granum.cli.annotation.CliOption;
+import biz.granum.cli.annotation.CliOptionArgument;
+import biz.granum.cli.exception.CliCouldNotCreateCollectionException;
+import biz.granum.cli.exception.CliCouldNotCreateModelException;
+import biz.granum.cli.exception.CliCouldNotProcessArgumentsException;
+import biz.granum.cli.util.BasicReflection;
+import java.io.PrintWriter;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-public class CliModelProcessor<T> {
+public abstract class CliModelProcessor<I, T> {
 
-    private static final Map<Class, Class<? extends Collection>> collectionAbstractionMappings = new HashMap<Class, Class<? extends Collection>>();
+    private static final Map<Class, Class<? extends Collection>> collectionAbstractionMappings =
+            new HashMap<Class, Class<? extends Collection>>();
 
     static {
         collectionAbstractionMappings.put(Set.class, HashSet.class);
@@ -62,14 +76,22 @@ public class CliModelProcessor<T> {
     }
 
     private final Class<T> modelClass;
-    private final CliProviderPlugin provider;
+
+    private final CliProviderPlugin<I> provider;
+
     private Map<Field, CliOptionType> fieldToOptionsMap;
+
     private Map<Field, CliArgumentType> fieldToOptionArgumentTypeMap = new HashMap<Field, CliArgumentType>();
+
     private final String helpHeader;
+
     private final String helpFooter;
 
+    private T model;
 
-    private CliModelProcessor(Class<T> modelClass, CliProviderPlugin provider, String helpHeader, String helpFooter) {
+    public CliModelProcessor(Class<T> modelClass,
+            CliProviderPlugin<I> provider, String helpHeader,
+            String helpFooter) {
         this.modelClass = modelClass;
         this.provider = provider;
         this.helpHeader = helpHeader;
@@ -77,16 +99,19 @@ public class CliModelProcessor<T> {
     }
 
     public static void registerCollectionMapping(Class<? extends Collection> abstraction,
-                                                 Class<? extends Collection> implementation) {
+            Class<? extends Collection> implementation) {
         collectionAbstractionMappings.put(abstraction, implementation);
     }
 
-    Class<T> getModelClass() {
-        return modelClass;
-    }
-
-    CliProviderPlugin getProvider() {
-        return provider;
+    T getModel() throws IllegalAccessException {
+        if(this.model == null) {
+            try {
+                this.model = modelClass.newInstance();
+            } catch (InstantiationException e) {
+                throw new CliCouldNotCreateModelException("Model requires a public no-arg constructor.", e);
+            }
+        }
+        return model;
     }
 
     Iterable<Field> getFields() {
@@ -101,15 +126,13 @@ public class CliModelProcessor<T> {
         return fieldToOptionArgumentTypeMap.get(field);
     }
 
-    public static <T> CliModelProcessor<T> create(Class<T> modelClass, CliProviderPlugin provider,
-                                                  String helpHeader, String helpFooter) {
-        CliModelProcessor<T> modelProcessor = new CliModelProcessor<T>(modelClass, provider, helpHeader, helpFooter);
-        modelProcessor.processModel();
-        return modelProcessor;
+    ConfigurationProcessor<I, T> createConfigProcessor() {
+        return new ConfigurationProcessor<I, T>(this, this.provider);
     }
 
-    public T processArguments(String[] arguments) throws CliCouldNotProcessArgumentsException {
-        return CliArgumentProcessor.processArguments(arguments, this);
+    public T processArguments(I arguments) throws CliCouldNotProcessArgumentsException, IllegalAccessException {
+        this.processModel();
+        return createConfigProcessor().process(arguments, getModel());
     }
 
     public void printHelp(PrintWriter writer) {
@@ -176,8 +199,8 @@ public class CliModelProcessor<T> {
     private static Class<?> getArgumentDataType(Field field) {
         Class<?> actualType;
         if(Collection.class.isAssignableFrom(field.getType())) {
-            ParameterizedType parameterizedType = (ParameterizedType) field.getGenericType();
-            actualType = (Class<?>) parameterizedType.getActualTypeArguments()[0];
+            ParameterizedType parameterizedType = (ParameterizedType)field.getGenericType();
+            actualType = (Class<?>)parameterizedType.getActualTypeArguments()[0];
         } else {
             actualType = field.getType();
         }
@@ -212,6 +235,7 @@ public class CliModelProcessor<T> {
                             .setDescription(cliOption.description())
                             .setRequired(cliOption.required())
                             .setArgument(cliOption.argument())
+                            .withPropertyKey(getPropertyKeyFor(modelClass, field, cliOption))
                             .build();
                     fieldMap.put(field, optionType);
                 }
@@ -220,40 +244,24 @@ public class CliModelProcessor<T> {
         return fieldMap;
     }
 
-    private static Object[] getTypedDefaults(Class<?> type, String... defaultValues) {
-        Method method;
-        Object[] typedDefaultValues = new Object[defaultValues.length];
-        String currentDefaultValue = null; // for error message.
-        try {
-            if(type == String.class) {
-                for (int i = 0, defaultValuesLength = defaultValues.length; i < defaultValuesLength; i++) {
-                    currentDefaultValue = defaultValues[i];
-                    typedDefaultValues[i] = currentDefaultValue;
-                }
+    private static String getPropertyKeyFor(Class modelClass, Field field, CliOption option) {
+        String propertyKey = option.propertyKey();
+        if(propertyKey.length() == 0) {
+            String longOption = option.longOption();
+            StringBuilder keyBuilder = new StringBuilder(modelClass.getSimpleName()).append(".");
+            if(longOption.length() > 0) {
+                keyBuilder.append(longOption);
             } else {
-                if(type.isPrimitive()) {
-                    type = ClassUtils.primitiveToWrapper(type);
-                }
-                method = type.getMethod("valueOf", String.class);
-                for (int i = 0, defaultValuesLength = defaultValues.length; i < defaultValuesLength; i++) {
-                    currentDefaultValue = defaultValues[i];
-                    typedDefaultValues[i] = method.invoke(null, currentDefaultValue);
-                }
+                keyBuilder.append(field.getName());
             }
 
-        } catch (InvocationTargetException e) {
-            String msg = String.format("Could not create value of type %s from the value %s",
-                    type, currentDefaultValue);
-            throw new CliCouldNotCreateDefaultValueException(msg, e);
-        } catch (NoSuchMethodException e) {
-            String msg = "Defaults only implemented for types that implement a method with the signature " +
-                    "\"public static {type} valueOf(String);\"";
-            throw new CliCouldNotCreateDefaultValueException(msg, e);
-        } catch (IllegalAccessException e) {
-            throw new CliCouldNotCreateDefaultValueException("I'm sorry, Dave.", e);
+            propertyKey = keyBuilder.toString();
         }
-        return typedDefaultValues;
+        return propertyKey;
+    }
 
+    private static Object[] getTypedDefaults(Class<?> type, String... defaultValues) {
+        return BasicReflection.typedValuesFromStrings(type, defaultValues);
     }
 
     Class getConcreteCollectionType(Field field) {

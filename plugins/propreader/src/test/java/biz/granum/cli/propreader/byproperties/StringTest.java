@@ -20,17 +20,20 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package biz.granum.cli.joptsimple;
+package biz.granum.cli.propreader.byproperties;
 
-import biz.granum.cli.*;
+import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.byproperties.ModelFromPropertiesStringTest;
+import biz.granum.cli.propreader.PropertyReaderModelProcessor;
+import java.util.Properties;
 
-public class JoptSimpleParseVariousCollectionErrorsTest extends CliVariousModelErrorsTest {
+public class StringTest extends ModelFromPropertiesStringTest {
 
-    @Override
-    public CliProviderPlugin getPlugin() {
-        return new JoptSimpleCliProvider();
+    public <T> CliModelProcessor<Properties, T> getProcessor(Class<T> model, String header, String footer) {
+        return new PropertyReaderModelProcessor<T>(
+                model,
+                header, footer
+        );
     }
-
-
 }
  
