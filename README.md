@@ -11,7 +11,7 @@ three lines of extra code?
 CLI Annotations is a misnomer. The project started as "just" an extension of the excellent JOptSimple. And it was good.
 Parsing the command line straight into an annotated POJO was pretty slick, all by itself.
 
-But, eventually, all applications evolves to <strike>send mail</strike> become a web-app. Which means
+But, eventually, all applications evolves to <del>send mail</del> become a web-app. Which means
 configuring from a resource property file, or perhaps just a property file in the startup directory. So
 cli-annotations has evolved to read properties files. With just one more annotation and a few lines of code you can
 switch from reading configuration off the command line to reading configuration from one or more properties files.
