@@ -131,7 +131,7 @@ public class CliOptionType {
         }
 
         private void validateOptionName() {
-            if(shortOption.equals("") && longOption.equals("")) {
+            if(shortOption.equals("") && longOption.equals("") && propertyKey.equals("")) {
                 throw new CliMissingOptionNameAnnotationException();
             }
         }

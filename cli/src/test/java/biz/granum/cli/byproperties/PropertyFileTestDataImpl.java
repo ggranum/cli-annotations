@@ -27,6 +27,11 @@ public class PropertyFileTestDataImpl extends TestData<Properties> {
     }
 
     @Override
+    public Properties getSimpleBoolean(Class modelClass, String fieldName, boolean value) {
+        return getProps(modelClass.getSimpleName() + "." + fieldName, String.valueOf(value));
+    }
+
+    @Override
     public Properties getSimpleStringList() {
         return getProps("simpleStringList", "foo,bar,baz");
     }

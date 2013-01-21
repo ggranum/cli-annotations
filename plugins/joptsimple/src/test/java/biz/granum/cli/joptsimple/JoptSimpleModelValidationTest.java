@@ -25,9 +25,9 @@ package biz.granum.cli.joptsimple;
 import biz.granum.cli.CliModelProcessor;
 import biz.granum.cli.TestData;
 import biz.granum.cli.bycommandline.CommandLineTestDataImpl;
-import biz.granum.cli.plugintest.ModelErrorsTest;
+import biz.granum.cli.plugintest.ModelValidationTest;
 
-public class JoptSimpleVariousModelErrorsTest extends ModelErrorsTest<String[]> {
+public class JoptSimpleModelValidationTest extends ModelValidationTest<String[]> {
 
     @Override
     public TestData<String[]> getTestData() {
@@ -40,6 +40,5 @@ public class JoptSimpleVariousModelErrorsTest extends ModelErrorsTest<String[]> 
                 header, footer
         );
     }
-
 }
  

@@ -10,6 +10,8 @@ import biz.granum.cli.plugintest.PluginTestCase;
 
 public abstract class TestData<I> {
 
+    public abstract I getSimpleBoolean(Class modelClass, String fieldName, boolean value);
+
     public abstract I getSimpleStringList();
 
     public abstract PluginTestCase<I>[] getFlagCases();

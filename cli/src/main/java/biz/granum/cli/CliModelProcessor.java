@@ -231,7 +231,7 @@ public abstract class CliModelProcessor<I, T> {
                 if(cliOption != null) {
                     CliOptionType optionType = new CliOptionType.Builder()
                             .setShortOption(cliOption.shortOption())
-                            .setLongOption(cliOption.longOption())
+                            .setLongOption(getLongOptionFor(field, cliOption))
                             .setDescription(cliOption.description())
                             .setRequired(cliOption.required())
                             .setArgument(cliOption.argument())
@@ -242,6 +242,15 @@ public abstract class CliModelProcessor<I, T> {
             }
         } while ((modelClass = modelClass.getSuperclass()) != null && modelClass != Object.class);
         return fieldMap;
+    }
+
+    private static String getLongOptionFor(Field field, CliOption cliOption) {
+        String longOption = cliOption.longOption();
+        String shortOption = cliOption.longOption();
+        if(longOption.equals("") && shortOption.equals("")) {
+            longOption = field.getName();
+        }
+        return longOption;
     }
 
     private static String getPropertyKeyFor(Class modelClass, Field field, CliOption option) {

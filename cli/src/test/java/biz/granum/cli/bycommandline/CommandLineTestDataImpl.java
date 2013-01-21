@@ -15,6 +15,11 @@ public class CommandLineTestDataImpl extends TestData<String[]> {
     }
 
     @Override
+    public String[] getSimpleBoolean(Class modelClass, String fieldName, boolean value) {
+        return new String[]{"--" + fieldName, String.valueOf(value)};
+    }
+
+    @Override
     public String[] getSimpleStringList() {
         return new String[]{"-a", "foo,bar,baz"};
     }

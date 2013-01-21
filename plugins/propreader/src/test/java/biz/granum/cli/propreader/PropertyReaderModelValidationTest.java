@@ -20,21 +20,26 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package biz.granum.cli.configuration.errors;
+package biz.granum.cli.propreader;
 
-import biz.granum.cli.*;
-import biz.granum.cli.annotation.*;
+import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.TestData;
+import biz.granum.cli.byproperties.PropertyFileTestDataImpl;
+import biz.granum.cli.plugintest.ModelValidationTest;
+import java.util.Properties;
 
-public class MissingOptionsConfiguration extends CliConfig {
+public class PropertyReaderModelValidationTest extends ModelValidationTest<Properties> {
 
-    @CliOption(
-            description = "A single boolean value should throw MissingOptionsException"
-    )
-    public boolean aBoolean;
-
-
-    public MissingOptionsConfiguration() {
+    @Override
+    public TestData<Properties> getTestData() {
+        return new PropertyFileTestDataImpl();
     }
 
+    public <T> CliModelProcessor<Properties, T> getProcessor(Class<T> model, String header, String footer) {
+        return new PropertyReaderModelProcessor<T>(
+                model,
+                header, footer
+        );
+    }
 }
  

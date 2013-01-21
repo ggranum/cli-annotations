@@ -6,10 +6,8 @@
  */
 package biz.granum.cli;
 
-import biz.granum.cli.configuration.errors.MissingOptionsConfiguration;
 import biz.granum.cli.configuration.errors.UninstantiableCollectionMemberType;
 import biz.granum.cli.exception.CliCouldNotCreateDefaultValueException;
-import biz.granum.cli.exception.CliMissingOptionNameAnnotationException;
 import java.io.PrintWriter;
 import java.util.List;
 import org.junit.Test;
@@ -22,34 +20,34 @@ public class CliGatherAnnotationsTest {
     public CliProviderPlugin<String[]> getPlugin() {
         return new CliProviderPlugin<String[]>() {
 
-            @Override
+            //@Override
             public void addOption(CliOptionType optionType) {
             }
 
-            @Override
+            //@Override
             public void addArgument(CliOptionType optionKey, CliArgumentType cliArgument) throws
                     CliCouldNotCreateDefaultValueException {
             }
 
-            @Override
+            //@Override
             public void processInput(String[] args) {
             }
 
-            @Override
+            //@Override
             public void printHelp(PrintWriter writer) {
             }
 
-            @Override
+            //@Override
             public boolean isOptionSet(String optionKey) {
                 return false;
             }
 
-            @Override
+            //@Override
             public Object getOptionValue(String optionKey, CliArgumentType argumentType) {
                 return null;
             }
 
-            @Override
+            //@Override
             public List<Object> getRepeatingOptionValue(String optionKey, CliArgumentType argumentType) {
                 return null;
             }
@@ -61,13 +59,6 @@ public class CliGatherAnnotationsTest {
         CliModelProcessor<String[], T> processor = new CliModelProcessor<String[], T>(model, plugin, "", "") {
         };
         return processor.processInput(args);
-    }
-
-    @Test(expected = CliMissingOptionNameAnnotationException.class)
-    public void testHandleMissingOptions() throws Exception {
-        String[] args = {};
-        MissingOptionsConfiguration model = getPopulatedModel(args, MissingOptionsConfiguration.class);
-        assertThat(model, nullValue());
     }
 
     @Test(expected = CliCouldNotCreateDefaultValueException.class)

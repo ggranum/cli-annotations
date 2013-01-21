@@ -20,18 +20,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * Copyright 2012 Geoff M. Granum,All Rights Reserved.
- *
- * 11/2/12 3:13 PM 
- * @author ggranum
- */
-package biz.granum.cli.exception;
+package biz.granum.cli.joptsimple;
 
-public final class CliMissingOptionNameAnnotationException extends RuntimeException {
+import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.TestData;
+import biz.granum.cli.bycommandline.CommandLineTestDataImpl;
+import biz.granum.cli.plugintest.ModelErrorsTest;
 
-    public CliMissingOptionNameAnnotationException() {
-        super("CliOption Annotation requires a value for either shortOption, longOption or propertyKey.");
+public class JoptSimpleModelErrorsTest extends ModelErrorsTest<String[]> {
+
+    @Override
+    public TestData<String[]> getTestData() {
+        return new CommandLineTestDataImpl();
+    }
+
+    public <T> CliModelProcessor<String[], T> getProcessor(Class<T> model, String header, String footer) {
+        return new JoptSimpleCliModelProcessor<T>(
+                model,
+                header, footer
+        );
     }
 
 }
