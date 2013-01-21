@@ -28,6 +28,8 @@ import biz.granum.cli.byproperties.PropertyFileTestDataImpl;
 import biz.granum.cli.plugintest.UserInputErrorsTest;
 import biz.granum.cli.propreader.PropertyReaderModelProcessor;
 import java.util.Properties;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class PropertyFileUserInputErrorsTest extends UserInputErrorsTest<Properties> {
 
@@ -43,5 +45,10 @@ public class PropertyFileUserInputErrorsTest extends UserInputErrorsTest<Propert
         );
     }
 
+    @Ignore
+    @Override
+    @Test
+    public void testUnknownArgument() throws Exception {
+    }
 }
  

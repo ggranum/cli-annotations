@@ -3,6 +3,8 @@ sourceCompatibility = '1.5'
 targetCompatibility = '1.5'
 version = '0.1.1';
 
+defaultTasks 'clean', 'build'
+
 subprojects {
     repositories {
         mavenCentral()
