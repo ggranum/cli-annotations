@@ -77,7 +77,7 @@ public class PropertyReaderModelProcessorTest {
     @Test
     public void testProcessInputForThreeResourcePathsWithOverrides() throws Exception {
         PropertyReaderModelProcessor<ProcessorTestConfig> processor =
-                new PropertyReaderModelProcessor<ProcessorTestConfig>(ProcessorTestConfig.class, "", "");
+                new PropertyReaderModelProcessor<ProcessorTestConfig>(ProcessorTestConfig.class);
 
         Properties p = processor.addResourcePath("PropertyReaderModelProcessorTest_A.properties", getClass());
         assertThat(p, Matchers.notNullValue());
