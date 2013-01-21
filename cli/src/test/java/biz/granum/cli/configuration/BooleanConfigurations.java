@@ -30,34 +30,37 @@ import java.util.List;
 public class BooleanConfigurations extends CliConfig {
 
     @CliOption(
-            shortOption = "b",
-            longOption = "bBoolean",
+            shortOption = "s",
+            longOption = "booleanLongOption",
+            propertyKey = "booleanPropertyKey",
             description = "A single boolean value"
     )
-    public boolean bBoolean;
+    public boolean booleanFlag;
 
     @CliOption(
-            shortOption = "c",
-            longOption = "cBoolean",
+            shortOption = "a",
+            longOption = "booleanLongOption",
+            propertyKey = "booleanPropertyKey",
             description = "A single boolean value with optional args.",
             argument = @CliOptionArgument()
     )
-    public boolean cBoolean;
+    public boolean boolWithOptArg;
 
     @CliOption(
             shortOption = "d",
-            longOption = "dBooleanValues",
+            longOption = "listOfBooleans",
             description = "A list of boolean values"
     )
-    public List<Boolean> dBooleanValues;
+    public List<Boolean> listOfBooleans;
 
     @CliOption(
             shortOption = "e",
-            longOption = "eBoolean",
+            longOption = "booleanLongOption",
+            propertyKey = "booleanPropertyKey",
             description = "A single default=true boolean value.",
             argument = @CliOptionArgument(defaultValue = "true")
     )
-    public Boolean eBoolean;
+    public Boolean boolWithDefaultOfTrue;
 
     @CliOption(
             shortOption = "f",

@@ -6,14 +6,22 @@
  */
 package biz.granum.cli;
 
+import biz.granum.cli.plugintest.PluginTestCase;
+
 public abstract class TestData<I> {
 
     public abstract I getSimpleStringList();
 
-    public abstract I getSimpleFlag();
+    public abstract PluginTestCase<I>[] getFlagCases();
 
     public abstract I getEmptyInput();
 
     public abstract I getTestUnknownArgument();
+
+    public abstract I getShowHelpFlag();
+
+    public abstract PluginTestCase<I>[] getSetBooleanToTrueCases();
+
+    public abstract PluginTestCase<I>[] getSetBooleanToFalseCases();
 }
  

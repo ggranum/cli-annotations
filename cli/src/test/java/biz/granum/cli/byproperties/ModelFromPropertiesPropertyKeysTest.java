@@ -32,7 +32,7 @@ public abstract class ModelFromPropertiesPropertyKeysTest {
         BooleanConfigurations model = getPopulatedModel(p, BooleanConfigurations.class);
         assertThat(model.showHelp(), is(false));
         assertThat(model.fBoolean, is(true));
-        assertThat(model.dBooleanValues.isEmpty(), is(true));
+        assertThat(model.listOfBooleans.isEmpty(), is(true));
     }
 
     @Test
@@ -42,7 +42,7 @@ public abstract class ModelFromPropertiesPropertyKeysTest {
         BooleanConfigurations model = getPopulatedModel(p, BooleanConfigurations.class);
         assertThat(model.showHelp(), is(false));
         assertThat(model.fBoolean, is(false));
-        assertThat(model.dBooleanValues.isEmpty(), is(true));
+        assertThat(model.listOfBooleans.isEmpty(), is(true));
     }
 
     @Test
@@ -52,7 +52,7 @@ public abstract class ModelFromPropertiesPropertyKeysTest {
         BooleanConfigurations model = getPopulatedModel(p, BooleanConfigurations.class);
         assertThat(model.showHelp(), is(false));
         assertThat(model.fBoolean, is(false));
-        assertThat(model.dBooleanValues.isEmpty(), is(true));
+        assertThat(model.listOfBooleans.isEmpty(), is(true));
     }
 
     @Test
@@ -63,7 +63,7 @@ public abstract class ModelFromPropertiesPropertyKeysTest {
         assertThat(model.showHelp(), is(false));
         assertThat(model.fBoolean, is(false));
         assertThat(model.gBoolean, is(true));
-        assertThat(model.dBooleanValues.isEmpty(), is(true));
+        assertThat(model.listOfBooleans.isEmpty(), is(true));
     }
 
     @Test
@@ -74,7 +74,7 @@ public abstract class ModelFromPropertiesPropertyKeysTest {
         assertThat(model.showHelp(), is(false));
         assertThat(model.fBoolean, is(false));
         assertThat(model.iBoolean, is(true));
-        assertThat(model.dBooleanValues.isEmpty(), is(true));
+        assertThat(model.listOfBooleans.isEmpty(), is(true));
     }
 }
 

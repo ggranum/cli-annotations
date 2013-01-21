@@ -20,37 +20,26 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package biz.granum.cli.configuration;
+package biz.granum.cli.propreader;
 
-import biz.granum.cli.CliConfig;
-import biz.granum.cli.annotation.CliOption;
-import biz.granum.cli.annotation.CliOptionArgument;
-import java.util.List;
+import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.TestData;
+import biz.granum.cli.byproperties.PropertyFileTestDataImpl;
+import biz.granum.cli.plugintest.ModelErrorsTest;
+import java.util.Properties;
 
-public class IntegerConfigurations extends CliConfig {
+public class PropertyReaderModelErrorsTest extends ModelErrorsTest<Properties> {
 
-    @CliOption(
-            shortOption = "a",
-            longOption = "aIntValue",
-            description = "Simplest integer value."
-    )
-    public int aIntValue;
+    @Override
+    public TestData<Properties> getTestData() {
+        return new PropertyFileTestDataImpl();
+    }
 
-    @CliOption(
-            shortOption = "j", longOption = "intValues",
-            description = "List of integer values.",
-            argument = @CliOptionArgument()
-    )
-    public List<Integer> integerList;
-
-    @CliOption(
-            shortOption = "c", longOption = "cIntValues",
-            description = "List of integer values with defaults.",
-            argument = @CliOptionArgument(defaultValue = {"10", "20", "30"})
-    )
-    public List<Integer> cIntValues;
-
-    public IntegerConfigurations() {
+    public <T> CliModelProcessor<Properties, T> getProcessor(Class<T> model, String header, String footer) {
+        return new PropertyReaderModelProcessor<T>(
+                model,
+                header, footer
+        );
     }
 
 }

@@ -29,7 +29,7 @@ public class BasicReflection {
                 method = type.getMethod("valueOf", String.class);
                 for (int i = 0, defaultValuesLength = defaultValues.length; i < defaultValuesLength; i++) {
                     currentDefaultValue = defaultValues[i];
-                    typedDefaultValues[i] = method.invoke(null, currentDefaultValue);
+                    typedDefaultValues[i] = getInstanceValue(type, method, currentDefaultValue);
                 }
             }
 
@@ -45,6 +45,24 @@ public class BasicReflection {
             throw new CliCouldNotCreateDefaultValueException("I'm sorry, Dave.", e);
         }
         return typedDefaultValues;
+    }
+
+    private static Object getInstanceValue(Class<?> type, Method method, String currentDefaultValue) throws
+            IllegalAccessException,
+            InvocationTargetException {
+        if(currentDefaultValue == null || currentDefaultValue.isEmpty()) {
+            currentDefaultValue = getDefaultForType(type);
+        }
+        return method.invoke(null, currentDefaultValue);
+    }
+
+    private static String getDefaultForType(Class<?> type) {
+        if(Number.class.isAssignableFrom(type)) {
+            return "0";
+        } else if(Boolean.class.isAssignableFrom(type)) {
+            return "false";
+        }
+        return "";
     }
 }
  

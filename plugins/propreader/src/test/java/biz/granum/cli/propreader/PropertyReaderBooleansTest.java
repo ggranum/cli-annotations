@@ -20,16 +20,15 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package biz.granum.cli.propreader.byproperties;
+package biz.granum.cli.propreader;
 
 import biz.granum.cli.CliModelProcessor;
 import biz.granum.cli.TestData;
 import biz.granum.cli.byproperties.PropertyFileTestDataImpl;
-import biz.granum.cli.plugintest.VariousModelErrorsTest;
-import biz.granum.cli.propreader.PropertyReaderModelProcessor;
+import biz.granum.cli.plugintest.BooleansTest;
 import java.util.Properties;
 
-public class PropertyFileVariousModelErrorsTest extends VariousModelErrorsTest<Properties> {
+public class PropertyReaderBooleansTest extends BooleansTest<Properties> {
 
     @Override
     public TestData<Properties> getTestData() {
@@ -42,6 +41,5 @@ public class PropertyFileVariousModelErrorsTest extends VariousModelErrorsTest<P
                 header, footer
         );
     }
-
 }
  

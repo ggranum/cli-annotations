@@ -25,13 +25,14 @@ package biz.granum.cli;
  *
  */
 
-import biz.granum.cli.annotation.*;
+import biz.granum.cli.annotation.CliOption;
 
 public abstract class CliConfig {
 
     @CliOption(
             shortOption = "h",
             longOption = "help",
+            propertyKey = "showHelp",
             description = "Show application help."
     )
     private boolean showHelp;

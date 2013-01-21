@@ -92,7 +92,7 @@ public class PropertyReaderConfigurationProvider implements CliProviderPlugin<Pr
     public Object getOptionValue(String optionLookupKey, CliArgumentType argumentType) {
         String value = getRawValue(optionLookupKey);
         if(value == null) {
-            return defaultValue(argumentType);
+            value = defaultValue(argumentType);
         }
         return toTypedValue(argumentType.getArgumentType(), value);
     }
@@ -105,8 +105,8 @@ public class PropertyReaderConfigurationProvider implements CliProviderPlugin<Pr
         return BasicReflection.typedValuesFromStrings(argumentType, value)[0];
     }
 
-    private Object defaultValue(CliArgumentType argumentType) {
-        Object[] defaults = argumentType.getTypedDefaultValues();
+    private String defaultValue(CliArgumentType argumentType) {
+        String[] defaults = argumentType.getDefaultValues();
         if(defaults != null && defaults.length == 1) {
             return defaults[0];
         }
