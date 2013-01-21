@@ -19,7 +19,7 @@ public abstract class PluginTest<I> {
 
     public <T> T getPopulatedModel(I args, Class<T> model) throws Exception {
         CliModelProcessor<I, T> processor = getProcessor(model, "", "");
-        return processor.processArguments(args);
+        return processor.processInput(args);
     }
 
 }

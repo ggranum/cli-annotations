@@ -22,7 +22,7 @@ public abstract class ModelFromPropertiesIntegerTest {
 
     public <T> T getPopulatedModel(Properties p, Class<T> model) throws Exception {
         CliModelProcessor<Properties, T> processor = getProcessor(model, "", "");
-        return processor.processArguments(p);
+        return processor.processInput(p);
     }
 
     @Test

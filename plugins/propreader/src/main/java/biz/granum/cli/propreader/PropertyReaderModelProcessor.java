@@ -7,6 +7,7 @@
 package biz.granum.cli.propreader;
 
 import biz.granum.cli.CliModelProcessor;
+import biz.granum.cli.exception.CliCouldNotProcessArgumentsException;
 import java.util.Properties;
 
 public class PropertyReaderModelProcessor<T> extends CliModelProcessor<Properties, T> {
@@ -14,6 +15,13 @@ public class PropertyReaderModelProcessor<T> extends CliModelProcessor<Propertie
     public PropertyReaderModelProcessor(Class<T> modelClass,
             String helpHeader, String helpFooter) {
         super(modelClass, new PropertyReaderConfigurationProvider(), helpHeader, helpFooter);
+    }
+
+    @Override
+    public T processInput(Properties arguments) throws
+            CliCouldNotProcessArgumentsException,
+            IllegalAccessException {
+        return super.processInput(arguments);
     }
 }
  

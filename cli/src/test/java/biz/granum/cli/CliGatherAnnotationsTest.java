@@ -60,7 +60,7 @@ public class CliGatherAnnotationsTest {
         CliProviderPlugin<String[]> plugin = getPlugin();
         CliModelProcessor<String[], T> processor = new CliModelProcessor<String[], T>(model, plugin, "", "") {
         };
-        return processor.processArguments(args);
+        return processor.processInput(args);
     }
 
     @Test(expected = CliMissingOptionNameAnnotationException.class)

@@ -130,7 +130,7 @@ public abstract class CliModelProcessor<I, T> {
         return new ConfigurationProcessor<I, T>(this, this.provider);
     }
 
-    public T processArguments(I arguments) throws CliCouldNotProcessArgumentsException, IllegalAccessException {
+    public T processInput(I arguments) throws CliCouldNotProcessArgumentsException, IllegalAccessException {
         this.processModel();
         return createConfigProcessor().process(arguments, getModel());
     }

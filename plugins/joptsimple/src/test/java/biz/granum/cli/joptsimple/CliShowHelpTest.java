@@ -45,7 +45,7 @@ public class CliShowHelpTest {
                         ShowHelpTestCase.class,
                         header, footer
                 );
-        ShowHelpTestCase config = processor.processArguments(args);
+        ShowHelpTestCase config = processor.processInput(args);
 
         if(config.showHelp()) {
             processor.printHelp(out);

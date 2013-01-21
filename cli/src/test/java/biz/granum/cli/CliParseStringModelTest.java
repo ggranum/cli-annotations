@@ -20,7 +20,7 @@ public abstract class CliParseStringModelTest {
 
     public <T> T getPopulatedModel(String[] args, Class<T> model) throws Exception {
         CliModelProcessor<String[], T> processor = getProcessor(model, "", "");
-        return processor.processArguments(args);
+        return processor.processInput(args);
     }
 
     @Test
