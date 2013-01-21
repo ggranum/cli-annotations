@@ -184,4 +184,9 @@ The CLI plugin needs JOptSimple:
         compile 'net.sf.jopt-simple:jopt-simple:4.3'
 
 
-### Have fun, and I'd love your feedback and/or pull requests.
+### Have fun!
+
+
+
+
+#### I'd appreciate feedback, bug reports and/or pull requests.
