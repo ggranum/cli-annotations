@@ -35,7 +35,7 @@ public class JoptSimpleBooleansTest extends BooleansTest<String[]> {
     }
 
     public <T> CliModelProcessor<String[], T> getProcessor(Class<T> model, String header, String footer) {
-        return new JoptSimpleCliModelProcessor<T>(
+        return new JoptSimpleCliProcessor<T>(
                 model,
                 header, footer
         );

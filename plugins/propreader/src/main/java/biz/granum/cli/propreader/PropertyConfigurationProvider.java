@@ -42,13 +42,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class PropertyReaderConfigurationProvider implements CliProviderPlugin<Properties> {
+public class PropertyConfigurationProvider implements CliProviderPlugin<Properties> {
 
     Map<String, CliOptionType> optionLookupKeyToCliOption = new HashMap<String, CliOptionType>();
 
     Map<String, String> values;
 
-    public PropertyReaderConfigurationProvider() {
+    public PropertyConfigurationProvider() {
     }
 
     public void addOption(CliOptionType optionType) {

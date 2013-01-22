@@ -26,7 +26,7 @@ import biz.granum.cli.CliModelProcessor;
 import biz.granum.cli.TestData;
 import biz.granum.cli.byproperties.PropertyFileTestDataImpl;
 import biz.granum.cli.plugintest.UserInputErrorsTest;
-import biz.granum.cli.propreader.PropertyReaderModelProcessor;
+import biz.granum.cli.propreader.PropertyProcessor;
 import java.util.Properties;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,10 +39,7 @@ public class PropertyFileUserInputErrorsTest extends UserInputErrorsTest<Propert
     }
 
     public <T> CliModelProcessor<Properties, T> getProcessor(Class<T> model, String header, String footer) {
-        return new PropertyReaderModelProcessor<T>(
-                model,
-                header, footer
-        );
+        return new PropertyProcessor<T>(model);
     }
 
     @Ignore

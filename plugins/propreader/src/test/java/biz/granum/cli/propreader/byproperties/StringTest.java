@@ -24,16 +24,13 @@ package biz.granum.cli.propreader.byproperties;
 
 import biz.granum.cli.CliModelProcessor;
 import biz.granum.cli.byproperties.ModelFromPropertiesStringTest;
-import biz.granum.cli.propreader.PropertyReaderModelProcessor;
+import biz.granum.cli.propreader.PropertyProcessor;
 import java.util.Properties;
 
 public class StringTest extends ModelFromPropertiesStringTest {
 
     public <T> CliModelProcessor<Properties, T> getProcessor(Class<T> model, String header, String footer) {
-        return new PropertyReaderModelProcessor<T>(
-                model,
-                header, footer
-        );
+        return new PropertyProcessor<T>(model);
     }
 }
  

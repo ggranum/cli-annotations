@@ -36,10 +36,7 @@ public class PropertyReaderBooleansTest extends BooleansTest<Properties> {
     }
 
     public <T> CliModelProcessor<Properties, T> getProcessor(Class<T> model, String header, String footer) {
-        return new PropertyReaderModelProcessor<T>(
-                model,
-                header, footer
-        );
+        return new PropertyProcessor<T>(model);
     }
 }
  

@@ -41,7 +41,7 @@ public class CliShowHelpTest {
         PrintWriter out = new PrintWriter(stringWriter);
 
         CliModelProcessor<String[], ShowHelpTestCase> processor =
-                new JoptSimpleCliModelProcessor<ShowHelpTestCase>(
+                new JoptSimpleCliProcessor<ShowHelpTestCase>(
                         ShowHelpTestCase.class,
                         header, footer
                 );

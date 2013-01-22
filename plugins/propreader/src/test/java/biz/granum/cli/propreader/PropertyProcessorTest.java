@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PropertyReaderModelProcessorTest {
+public class PropertyProcessorTest {
     @Before
     public void setUp() throws Exception {
 
@@ -31,8 +31,8 @@ public class PropertyReaderModelProcessorTest {
 
     @Test
     public void testProcessInputForOneResourcePath() throws Exception {
-        PropertyReaderModelProcessor<ProcessorTestConfig> processor =
-                new PropertyReaderModelProcessor<ProcessorTestConfig>(ProcessorTestConfig.class, "", "");
+        PropertyProcessor<ProcessorTestConfig> processor =
+                new PropertyProcessor<ProcessorTestConfig>(ProcessorTestConfig.class);
 
         Properties p = processor.addResourcePath("PropertyReaderModelProcessorTest_A.properties", getClass());
         assertThat(p, Matchers.notNullValue());
@@ -52,8 +52,8 @@ public class PropertyReaderModelProcessorTest {
 
     @Test
     public void testProcessInputForTwoResourcePathsAdditive() throws Exception {
-        PropertyReaderModelProcessor<ProcessorTestConfig> processor =
-                new PropertyReaderModelProcessor<ProcessorTestConfig>(ProcessorTestConfig.class, "", "");
+        PropertyProcessor<ProcessorTestConfig> processor =
+                new PropertyProcessor<ProcessorTestConfig>(ProcessorTestConfig.class);
 
         Properties p = processor.addResourcePath("PropertyReaderModelProcessorTest_A.properties", getClass());
         assertThat(p, Matchers.notNullValue());
@@ -76,8 +76,8 @@ public class PropertyReaderModelProcessorTest {
 
     @Test
     public void testProcessInputForThreeResourcePathsWithOverrides() throws Exception {
-        PropertyReaderModelProcessor<ProcessorTestConfig> processor =
-                new PropertyReaderModelProcessor<ProcessorTestConfig>(ProcessorTestConfig.class);
+        PropertyProcessor<ProcessorTestConfig> processor =
+                new PropertyProcessor<ProcessorTestConfig>(ProcessorTestConfig.class);
 
         Properties p = processor.addResourcePath("PropertyReaderModelProcessorTest_A.properties", getClass());
         assertThat(p, Matchers.notNullValue());

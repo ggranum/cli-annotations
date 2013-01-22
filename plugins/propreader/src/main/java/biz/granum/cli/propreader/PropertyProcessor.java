@@ -14,19 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class PropertyReaderModelProcessor<T> extends CliModelProcessor<Properties, T> {
+public class PropertyProcessor<T> extends CliModelProcessor<Properties, T> {
 
     private final List<InputStream> inputSources = new ArrayList<InputStream>();
 
     private final Properties input = new Properties();
 
-    public PropertyReaderModelProcessor(Class<T> modelClass) {
-        this(modelClass, "", "");
-    }
-
-    public PropertyReaderModelProcessor(Class<T> modelClass,
-            String helpHeader, String helpFooter) {
-        super(modelClass, new PropertyReaderConfigurationProvider(), helpHeader, helpFooter);
+    public PropertyProcessor(Class<T> modelClass) {
+        super(modelClass, new PropertyConfigurationProvider(), "", "");
     }
 
     /**

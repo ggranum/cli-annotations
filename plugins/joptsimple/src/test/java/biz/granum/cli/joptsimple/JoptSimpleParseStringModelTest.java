@@ -28,7 +28,7 @@ import biz.granum.cli.CliParseStringModelTest;
 public class JoptSimpleParseStringModelTest extends CliParseStringModelTest {
 
     public <T> CliModelProcessor<String[], T> getProcessor(Class<T> model, String header, String footer) {
-        return new JoptSimpleCliModelProcessor<T>(
+        return new JoptSimpleCliProcessor<T>(
                 model,
                 header, footer
         );

@@ -36,10 +36,7 @@ public class PropertyReaderModelErrorsTest extends ModelErrorsTest<Properties> {
     }
 
     public <T> CliModelProcessor<Properties, T> getProcessor(Class<T> model, String header, String footer) {
-        return new PropertyReaderModelProcessor<T>(
-                model,
-                header, footer
-        );
+        return new PropertyProcessor<T>(model);
     }
 
 }
