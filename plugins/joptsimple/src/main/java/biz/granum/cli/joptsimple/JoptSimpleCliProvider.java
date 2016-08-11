@@ -20,12 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * Copyright 2012 Geoff M. Granum,All Rights Reserved.
- *
- * 11/2/12 2:02 PM 
- * @author ggranum
- */
+
 package biz.granum.cli.joptsimple;
 
 import biz.granum.cli.CliArgumentType;

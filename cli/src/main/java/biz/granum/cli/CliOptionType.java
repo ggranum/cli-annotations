@@ -20,12 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * Copyright 2012 Geoff M. Granum,All Rights Reserved.
- *
- * 11/2/12 3:32 PM 
- * @author ggranum
- */
+
 package biz.granum.cli;
 
 import biz.granum.cli.annotation.CliOptionArgument;

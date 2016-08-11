@@ -19,13 +19,6 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-/*
- * Copyright 2012 Geoff M. Granum,All Rights Reserved.
- *
- * 11/2/12 4:48 PM 
- * @author ggranum
- */
 package biz.granum.cli.exception;
 
 public class CliCouldNotProcessArgumentsException extends RuntimeException {

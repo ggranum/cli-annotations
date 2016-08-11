@@ -19,13 +19,6 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-/*
- * Copyright 2012 Geoff M. Granum,All Rights Reserved.
- *
- * 11/2/12 2:02 PM 
- * @author ggranum
- */
 package biz.granum.cli.preferences;
 
 import biz.granum.cli.CliArgumentType;

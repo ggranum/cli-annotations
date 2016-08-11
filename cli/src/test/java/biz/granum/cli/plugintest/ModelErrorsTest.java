@@ -1,9 +1,4 @@
-/*
- * Copyright 2012 Geoff M. Granum,All Rights Reserved.
- *
- * 11/3/12 6:25 PM 
- * @author ggranum
- */
+
 package biz.granum.cli.plugintest;
 
 import biz.granum.cli.CliModelProcessor;

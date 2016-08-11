@@ -20,12 +20,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * Copyright 2012 Geoff M. Granum,All Rights Reserved.
- *
- * 11/2/12 4:06 PM 
- * @author ggranum
- */
 package biz.granum.cli.exception;
 
 public class CliCouldNotCreateDefaultValueException extends RuntimeException {

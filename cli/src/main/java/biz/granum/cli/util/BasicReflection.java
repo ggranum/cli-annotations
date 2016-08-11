@@ -1,9 +1,3 @@
-/*
- * Copyright 2013 Geoff M. Granum,All Rights Reserved.
- *
- * 1/20/13 1:46 PM 
- * @author ggranum
- */
 package biz.granum.cli.util;
 
 import biz.granum.cli.exception.CliCouldNotCreateDefaultValueException;

@@ -19,13 +19,6 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-/*
- * Copyright 2012 Geoff M. Granum,All Rights Reserved.
- *
- * 11/2/12 1:52 PM 
- * @author ggranum
- */
 package biz.granum.cli;
 /**
  * Unmarshal command line arguments into an instance of the provided bean class.

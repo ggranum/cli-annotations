@@ -1,9 +1,4 @@
-/*
- * Copyright 2012 Geoff M. Granum,All Rights Reserved.
- *
- * 11/3/12 5:43 PM 
- * @author ggranum
- */
+
 package biz.granum.cli.exception;
 
 
