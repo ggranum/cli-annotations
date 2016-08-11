@@ -1,3 +1,4 @@
 include "cli",
         "plugins:joptsimple",
-        "plugins:propreader"
+        "plugins:propreader",
+        "plugins:preferences"

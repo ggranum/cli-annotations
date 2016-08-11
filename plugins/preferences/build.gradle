@@ -1,7 +1,7 @@
 apply plugin: 'java'
 sourceCompatibility = '1.5'
 targetCompatibility = '1.5'
-version = '0.2.1-beta';
+version = '0.0.1-beta';
 
 
 
@@ -16,21 +16,18 @@ dependencies {
 
 
 jar {
-    baseName "cli-a-propreader"
+    baseName "cli-a-preferences"
     manifest {
-        attributes('Implementation-Title': 'cli-annotations-propreader-plugin', 'Implementation-Version': version)
+        attributes('Implementation-Title': 'cli-annotations-preferences-plugin', 'Implementation-Version': version)
     }
 }
 
-
 task sourcesJar(type: Jar, dependsOn: classes) {
-    baseName "cli-a-propreader"
     classifier = 'sources'
     from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    baseName "cli-a-propreader"
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
